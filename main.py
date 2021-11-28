@@ -8,6 +8,20 @@ import shutil
 
 token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='!', case_insensitive = False)
+bot.remove_command('help') #removes the default help command (replacing with my own)
+
+@bot.group(invoke_without_command=True)
+#https://www.youtube.com/watch?v=ivXw9VO89jw & https://python.plainenglish.io/send-an-embed-with-a-discord-bot-in-python-61d34c711046
+async def help(msg):
+    em = discord.Embed(title = 'Commands', description = 'Descriptions of commands and how to use them')
+    em.add_field(name = 'image', value = 'Posts a saved image from the uncategorized directory corresponding to input that is > 0. \nFormat: !image <number>', inline=False)
+    em.add_field(name = 'memes', value = 'Posts a saved image from the memes directory corresponding to input that is > 0. \nFormat: !memes <number>', inline=False)
+    em.add_field(name = 'pet', value = 'Posts a saved image from the pet directory corresponding to input that is > 0. \nFormat: !pet <number>', inline=False)
+    em.add_field(name = 'randimg', value = 'Posts a saved random image. Format: !randimg', inline=False)
+    em.add_field(name = 's_img', value = 'Saves an image into the uncategorized directory. \nFormat: !s_img <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
+    em.add_field(name = 's_memes', value = 'Saves an image into the memes and uncategorized directory. \nFormat: !s_memes <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
+    em.add_field(name = 's_pet', value = 'Saves an image into the pet and uncategorized directory. \nFormat: !s_pet <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
+    await msg.send(embed = em)
 
 d = {}   #stores everything
 pet_dict = {} #stores pets
@@ -87,7 +101,7 @@ async def randimg(msg):
 @bot.command()
 async def image(msg, num):
     if len(d) == 0:
-        await msg.send('There are no images saved yet. Use the !s_img, !s_pet_img, or !s_memes command to save images to the directory.')
+        await msg.send('There are no images saved yet. Use the !s_img, !s_pet, or !s_memes command to save images to the directory.')
     elif num == '0':
         try:
             msg.send(file = discord.File(d[num]))
@@ -100,7 +114,7 @@ async def image(msg, num):
 @bot.command()
 async def pet(msg, num):
     if len(pet_dict) == 0:
-        await msg.send('There are no images saved yet. Use the !s_pet_img command to save images to the directory.')
+        await msg.send('There are no images saved yet. Use the !s_pet command to save images to the directory.')
     elif num == '0':
         try:
             msg.send(file = discord.File(pet_dict[num]))
