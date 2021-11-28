@@ -27,3 +27,4 @@ I have not figured out how to sort images and create profile cards. I have not s
 #### What problems, if any, have you encountered?
 
 Had to change bot project ideas cause I realized there might be some issues with my previous idea.
+I am not sure how to upload multiple images at once.
