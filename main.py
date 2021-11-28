@@ -88,11 +88,11 @@ async def randimg(msg):
 async def image(msg, num):
     if len(d) == 0:
         await msg.send('There are no images saved yet. Use the !s_img, !s_pet_img, or !s_memes command to save images to the directory.')
-    if num == '0':
+    elif num == '0':
         try:
             msg.send(file = discord.File(d[num]))
         except KeyError:
-            await msg.send('The image number ranges from 1 to ' + str(c))
+            await msg.send('The image number currently ranges from 1 to ' + str(c))
     else:
         num = int(num)
         await msg.send(file = discord.File(d[num]))
@@ -101,11 +101,11 @@ async def image(msg, num):
 async def pet(msg, num):
     if len(pet_dict) == 0:
         await msg.send('There are no images saved yet. Use the !s_pet_img command to save images to the directory.')
-    if num == '0':
+    elif num == '0':
         try:
             msg.send(file = discord.File(pet_dict[num]))
         except KeyError:
-            await msg.send('The image number ranges from 1 to ' + str(p))
+            await msg.send('The image number currently ranges from 1 to ' + str(p))
     else:
         num = int(num)
         await msg.send(file = discord.File(pet_dict[num]))
@@ -114,11 +114,11 @@ async def pet(msg, num):
 async def memes(msg, num):
     if len(meme_dict) == 0:
         await msg.send('There are no images saved yet. Use the !s_memes command to save images to the directory.')
-    if num == '0':
+    elif num == '0':
         try:
             msg.send(file = discord.File(meme_dict[num]))
         except KeyError:
-            await msg.send('The image number ranges from 1 to ' + str(me))
+            await msg.send('The image number currently ranges from 1 to ' + str(me))
     else:
         num = int(num)
         await msg.send(file = discord.File(meme_dict[num]))
