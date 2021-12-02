@@ -2,13 +2,9 @@ import discord
 from discord.ext import commands
 import os
 import random
-from discord.ext.commands.errors import CommandInvokeError
 import requests
 import uuid
 import shutil
-
-
-#print ('this file is located in' + str(os.getcwd()))       Used to find dir.
 
 token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='!', case_insensitive = False)
@@ -117,7 +113,6 @@ async def image(msg, num):
         else:
             num = int(num)
             await msg.send(file = discord.File(d[num]))
-
 
 @bot.command()
 async def pet(msg, num):
