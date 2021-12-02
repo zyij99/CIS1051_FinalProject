@@ -2,9 +2,13 @@ import discord
 from discord.ext import commands
 import os
 import random
+from discord.ext.commands.errors import CommandInvokeError
 import requests
 import uuid
 import shutil
+
+
+#print ('this file is located in' + str(os.getcwd()))       Used to find dir.
 
 token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='!', case_insensitive = False)
@@ -14,10 +18,10 @@ bot.remove_command('help') #removes the default help command (replacing with my 
 #https://www.youtube.com/watch?v=ivXw9VO89jw & https://python.plainenglish.io/send-an-embed-with-a-discord-bot-in-python-61d34c711046
 async def help(msg):
     em = discord.Embed(title = 'Commands', description = 'Descriptions of commands and how to use them')
-    em.add_field(name = 'image', value = 'Posts a saved image from the uncategorized directory corresponding to input that is > 0. \nFormat: !image <number>', inline=False)
-    em.add_field(name = 'memes', value = 'Posts a saved image from the memes directory corresponding to input that is > 0. \nFormat: !memes <number>', inline=False)
-    em.add_field(name = 'pet', value = 'Posts a saved image from the pet directory corresponding to input that is > 0. \nFormat: !pet <number>', inline=False)
-    em.add_field(name = 'randimg', value = 'Posts a saved random image. Format: !randimg', inline=False)
+    em.add_field(name = 'image', value = 'Posts a saved image from the uncategorized directory corresponding to input num>0. \nFormat: !image <number>', inline=False)
+    em.add_field(name = 'memes', value = 'Posts a saved image from the memes directory corresponding to input num>0. \nFormat: !memes <number>', inline=False)
+    em.add_field(name = 'pet', value = 'Posts a saved image from the pet directory corresponding to input num>0. \nFormat: !pet <number>', inline=False)
+    em.add_field(name = 'randimg', value = 'Posts a saved random image. \nFormat: !randimg', inline=False)
     em.add_field(name = 's_img', value = 'Saves an image into the uncategorized directory. \nFormat: !s_img <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
     em.add_field(name = 's_memes', value = 'Saves an image into the memes and uncategorized directory. \nFormat: !s_memes <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
     em.add_field(name = 's_pet', value = 'Saves an image into the pet and uncategorized directory. \nFormat: !s_pet <UPLOADED IMG/DISCORD IMAGE LINK>', inline=False)
@@ -108,8 +112,12 @@ async def image(msg, num):
         except KeyError:
             await msg.send('The image number currently ranges from 1 to ' + str(c))
     else:
-        num = int(num)
-        await msg.send(file = discord.File(d[num]))
+        if int(num) > c:
+            await msg.send('The image can not be called. The range is currently 1 to ' + str(c))
+        else:
+            num = int(num)
+            await msg.send(file = discord.File(d[num]))
+
 
 @bot.command()
 async def pet(msg, num):
@@ -121,8 +129,11 @@ async def pet(msg, num):
         except KeyError:
             await msg.send('The image number currently ranges from 1 to ' + str(p))
     else:
-        num = int(num)
-        await msg.send(file = discord.File(pet_dict[num]))
+        if int(num) > p:
+            await msg.send('The image can not be called. The range is currently 1 to ' + str(p))
+        else:
+            num = int(num)
+            await msg.send(file = discord.File(pet_dict[num]))
 
 @bot.command()
 async def memes(msg, num):
@@ -134,9 +145,11 @@ async def memes(msg, num):
         except KeyError:
             await msg.send('The image number currently ranges from 1 to ' + str(me))
     else:
-        num = int(num)
-        await msg.send(file = discord.File(meme_dict[num]))
-
+        if int(num) > me:
+            await msg.send('The image can not be called. The range is currently 1 to ' + str(me))
+        else:
+            num = int(num)
+            await msg.send(file = discord.File(meme_dict[num]))
 
 #Source: https://www.youtube.com/watch?v=pgmUBOV3IIs
 @bot.command()
