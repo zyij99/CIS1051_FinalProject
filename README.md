@@ -1,7 +1,7 @@
 # CIS1051_FinalProject
 
 Youtube Link:
-
+https://youtu.be/-6gWNQQ2Wys
 
 Difficulties faced/overcame:
 A difficulty I faced was learning how to store images and call them. I combined what I learned in class (file reading) with what I was able to find online about saving images to the discord bot directory. By storing the .jpg files inside of text files I was able to store them into dictionaries which made it easier to call them using the msg.send(file = discord.File('... .jpg') because they were assignmed numbers or the key values as they are saved. Another difficulty I faced was using github. I'm pretty new to this so I didn't know how to keep everything updated, so instead I used just 1 main python file with all my work rather than splitting it up into multiple files and using __init__ and other things, which can be seen in the embed section, where I made my own custom help commands.
