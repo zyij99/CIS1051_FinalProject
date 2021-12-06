@@ -11,7 +11,11 @@ token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix='!', case_insensitive = False)
 bot.remove_command('help') #removes the default help command (replacing with my own)
 
+#https://www.youtube.com/watch?v=0tn86pqnp0Q
+channel = bot.get_channel(917228502468685824) #BOT IMG SAVE SPAM CHANNEL
+
 #https://www.youtube.com/watch?v=Q5u6MDQAG7I Followed tutorial
+#https://www.reddit.com/prefs/apps
 reddit = praw.Reddit(client_id = 'khnzEfUFV1t6_6SS9O6a6w',
                     client_secret = '-HV-qPI1IhY8UKQnsNaZ9LeFuV7NPw',
                     username = os.getenv('usrname'),
@@ -20,7 +24,7 @@ reddit = praw.Reddit(client_id = 'khnzEfUFV1t6_6SS9O6a6w',
 subreddit = reddit.subreddit('memes')
 
 @bot.command()
-async def r_memes(ctx):
+async def r_memes(ctx):    
     subreddit = reddit.subreddit('memes')
     allsub = []
 
@@ -35,7 +39,6 @@ async def r_memes(ctx):
 
     em.set_image(url = url)
     await ctx.send(embed = em)
-
 
 @bot.group(invoke_without_command=True)
 #https://www.youtube.com/watch?v=ivXw9VO89jw & https://python.plainenglish.io/send-an-embed-with-a-discord-bot-in-python-61d34c711046
@@ -180,6 +183,7 @@ async def memes(ctx, num):
 async def s_img(ctx):
     #!update in the comment when uploading an image to save the image as a .jpg
     #exception block to check for error
+
     try:
         url = ctx.message.attachments[0].url            # check for an image, call exception if none found
     except IndexError:
@@ -195,10 +199,11 @@ async def s_img(ctx):
                 global c
                 c += 1
                 d[c] = imgName
-                await ctx.send('Saved Image' , file = discord.File(d[c]))
+                await channel.send('Saved Image' , file = discord.File(d[c]))      #posting to bot spam channel
                 inv_d = {value:key for key, value in d.items()} #https://stackoverflow.com/questions/8023306/get-key-by-value-in-dictionary?page=2&tab=votes#tab-top
                 imgNum = str(inv_d[imgName])
-                await ctx.send('This is image ' + imgNum)
+                await ctx.send('This is image ' + imgNum + 'of the uncategorized directory')
+                await channel.send('This is image ' + imgNum + 'of the uncategorized directory')
                 with open('imgURLs.txt', 'a') as a_file:    #https://www.kite.com/python/answers/how-to-append-a-newline-to-a-file-in-python
                     a_file.write('\n' + str(imgName))   # writes the image name into a txt document, which can be used to recall images loaded into the dictionary
                 return c
@@ -223,12 +228,13 @@ async def s_pet(ctx):
                 p += 1
                 d[c] = imgName
                 pet_dict[p] = imgName
-                await ctx.send('Saved Image' , file = discord.File(d[c]))
+                await channel.send('Saved Image' , file = discord.File(d[c]))
                 inv_d = {value:key for key, value in d.items()} 
                 imgNum = str(inv_d[imgName])
                 inv_pet = {value:key for key, value in pet_dict.items()} 
                 petNum = str(inv_pet[imgName])
-                await ctx.send('This is image ' + imgNum + ' of the unsorted directory and is image ' + petNum + ' of the pets directory.')
+                await ctx.send('Image is saved as image ' + imgNum + ' of the unsorted directory and is image ' + petNum + ' of the pets directory.')
+                await channel.send('Image is saved as image ' + imgNum + ' of the unsorted directory and is image ' + petNum + ' of the pets directory.')
                 with open('petsURLs.txt', 'a') as a_file:  
                     a_file.write('\n' + str(imgName))
                 with open('imgURLs.txt', 'a') as a_file:  
@@ -255,12 +261,13 @@ async def s_memes(ctx):
                 me += 1
                 d[c] = imgName
                 meme_dict[me] = imgName
-                await ctx.send('Saved Image' , file = discord.File(d[c]))
+                await channel.send('Saved Image' , file = discord.File(d[c]))
                 inv_d = {value:key for key, value in d.items()} 
                 imgNum = str(inv_d[imgName])
                 inv_meme = {value:key for key, value in meme_dict.items()} 
                 memeNum = str(inv_meme[imgName])
-                await ctx.send('This is image ' + imgNum + ' of the unsorted directory and is image ' + memeNum + ' of the memes directory.')
+                await ctx.send('Image is saved as image ' + imgNum + ' of the unsorted directory and is image ' + memeNum + ' of the memes directory.')
+                await channel.send('Image is saved as image ' + imgNum + ' of the unsorted directory and is image ' + memeNum + ' of the memes directory.')
                 with open('memeURLs.txt', 'a') as a_file:  
                     a_file.write('\n' + str(imgName))
                 with open('imgURLs.txt', 'a') as a_file:  
